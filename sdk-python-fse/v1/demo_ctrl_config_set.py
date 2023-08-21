@@ -19,7 +19,7 @@ def main():
         # set the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             dict = {
-                'fse_home_position': 0,
+                'home_offset': 0,
             }
             fi_fse.set_config(server_ip_list[i], dict)
 

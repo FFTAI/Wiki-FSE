@@ -12,8 +12,8 @@ def main():
         print('there is no abs')
         return
 
-    while True:
-        angle, radian = fi_fse.get_measured(Server_IP_list)
+    for i in range(len(Server_IP_list)):
+        angle, radian = fi_fse.get_measured(Server_IP_list[i])
         print("angle: ", angle, "radian: ", radian)
         time.sleep(0.1)
 

@@ -24,7 +24,7 @@ def main():
                 'DHCP_enable': False,
                 'SSID': 'FSE',
                 'password': 'fftai2015',
-                'static_IP': [192, 168, 137, i + 173],
+                'static_IP': [192, 168, 137, i + 100],
                 'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],

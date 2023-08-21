@@ -33,14 +33,14 @@ fse_port_pt = 0
 fse_network = ""
 fse_debug = True
 
-fsa_timeout = default_fse_timeout
-fsa_port_ctrl = default_fse_port_ctrl
-fsa_port_comm = default_fse_port_comm
-fsa_port_pt = default_fse_port_pt
-fsa_network = default_fse_network
+fse_timeout = default_fse_timeout
+fse_port_ctrl = default_fse_port_ctrl
+fse_port_comm = default_fse_port_comm
+fse_port_pt = default_fse_port_pt
+fse_network = default_fse_network
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.settimeout(fsa_timeout)
+s.settimeout(fse_timeout)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
 logger.print_trace("FSE start listening for broadcast...")
@@ -71,7 +71,7 @@ def get_root(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -83,7 +83,7 @@ def get_root(server_ip):
     except socket.timeout:  # fail after 1 second of no activity
         logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_root() except")
+        logger.print_trace_warning(server_ip + " fi_fse.get_root() except")
 
 
 def set_root(server_ip):
@@ -97,7 +97,7 @@ def set_root(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -117,7 +117,7 @@ def set_root(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.set_root_config() except")
         return None
 
 
@@ -133,7 +133,7 @@ def get_config(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -153,7 +153,7 @@ def get_config(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.get_root_config() except")
         return None
 
 
@@ -162,7 +162,7 @@ def set_config(server_ip, dict):
             "reqTarget": "/config",
             "property": "",
 
-            "fse_home_position": dict["fse_home_position"],
+            "home_offset": dict["home_offset"],
             }
 
     json_str = json.dumps(data)
@@ -170,7 +170,7 @@ def set_config(server_ip, dict):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -190,7 +190,7 @@ def set_config(server_ip, dict):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.set_root_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.set_root_config() except")
         return None
 
 
@@ -206,7 +206,7 @@ def save_config(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -226,7 +226,7 @@ def save_config(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.save_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.save_config() except")
         return None
 
 
@@ -241,7 +241,7 @@ def get_measured(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -261,7 +261,7 @@ def get_measured(server_ip):
         return FSEFunctionResult.TIMEOUT
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_pvc() except")
+        logger.print_trace_warning(server_ip + " fi_fse.get_pvc() except")
         return FSEFunctionResult.FAIL
 
 
@@ -277,7 +277,7 @@ def reboot(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -297,14 +297,15 @@ def reboot(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.reboot_motor_drive() except")
+        logger.print_trace_warning(server_ip + " fi_fse.reboot_motor_drive() except")
         return None
 
 
-def set_home_position(server_ip):
+def get_home_offset(server_ip):
     data = {
-        "method": "SET",
-        "reqTarget": "/home_position",
+        "method": "GET",
+        "reqTarget": "/home_offset",
+        "property": ""
     }
 
     json_str = json.dumps(data)
@@ -312,7 +313,46 @@ def set_home_position(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_ctrl))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fse_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSEFunctionResult.SUCCESS
+        else:
+            logger.print_trace_error(server_ip, " receive status is not OK!")
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fse.get_root_config() except")
+        return None
+
+
+# fse reset linear count
+# Parameters: including server ip，motor number
+# no return code
+def set_home_offset(server_ip, home_offset):
+    data = {
+        "method": "SET",
+        "reqTarget": "/home_offset",
+        "home_offset": home_offset,
+    }
+
+    json_str = json.dumps(data)
+
+    if fse_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
     try:
         data, address = s.recvfrom(1024)
 
@@ -331,7 +371,41 @@ def set_home_position(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.set_linear_count() except")
+        logger.print_trace_warning(server_ip + " fi_fse.set_linear_count() except")
+        return None
+
+
+def set_home_position(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/home_position",
+    }
+
+    json_str = json.dumps(data)
+
+    if fse_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fse_port_ctrl))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fse_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode("utf-8"))
+
+        if json_obj.get("status") == "OK":
+            return FSEFunctionResult.SUCCESS
+        else:
+            return None
+
+    except socket.timeout:  # fail after 1 second of no activity
+        logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
+        return None
+
+    except:
+        logger.print_trace_warning(server_ip + " fi_fse.set_linear_count() except")
         return None
 
 
@@ -347,7 +421,7 @@ def get_comm_root(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -356,19 +430,11 @@ def get_comm_root(server_ip):
 
         json_obj = json.loads(data.decode("utf-8"))
 
-        if json_obj.get("status") == "OK":
-            return FSEFunctionResult.SUCCESS
-        else:
-            logger.print_trace_error(server_ip, " receive status is not OK!")
-            return None
-
+        return json_obj
     except socket.timeout:  # fail after 1 second of no activity
         logger.print_trace_error(server_ip + " : Didn't receive anymore data! [Timeout]")
-        return None
-
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
-        return None
+        logger.print_trace_warning(server_ip + " fi_fse.get_root() except")
 
 
 def set_comm_root(server_ip, dict):
@@ -383,7 +449,7 @@ def set_comm_root(server_ip, dict):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -403,7 +469,7 @@ def set_comm_root(server_ip, dict):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.set_comm_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.set_comm_config() except")
         return None
 
 
@@ -419,7 +485,7 @@ def get_comm_config(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -439,7 +505,7 @@ def get_comm_config(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.get_root_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.get_root_config() except")
         return None
 
 
@@ -464,7 +530,7 @@ def set_comm_config(server_ip, dict):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -484,7 +550,7 @@ def set_comm_config(server_ip, dict):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.set_comm_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.set_comm_config() except")
         return None
 
 
@@ -500,7 +566,7 @@ def save_comm_config(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -520,7 +586,7 @@ def save_comm_config(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.save_config() except")
+        logger.print_trace_warning(server_ip + " fi_fse.save_config() except")
         return None
 
 
@@ -536,7 +602,7 @@ def reboot_comm(server_ip):
     if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
@@ -556,7 +622,7 @@ def reboot_comm(server_ip):
         return None
 
     except:
-        logger.print_trace_warning(server_ip + " fi_fsa.reboot() except")
+        logger.print_trace_warning(server_ip + " fi_fse.reboot() except")
         return None
 
 
@@ -569,7 +635,7 @@ def broadcast_func():
     found_server = False
     address_list = []
 
-    s.sendto("Is any fourier smart server here?".encode("utf-8"), (fsa_network, fsa_port_comm))
+    s.sendto("Is any fourier smart server here?".encode("utf-8"), (fse_network, fse_port_comm))
     print("\n")
 
     while True:
@@ -594,12 +660,12 @@ def broadcast_func():
 
 # 广播查询局域网下的全部 filter_type = "Actuator" or "AbsEncoder" or "CtrlBox"
 def broadcast_func_with_filter(filter_type=None):
-    logger.print_trace("FSA start listening for broadcast...")
+    logger.print_trace("FSE start listening for broadcast...")
 
     found_server = False
     address_list = []
 
-    s.sendto("Is any fourier smart server here?".encode("utf-8"), (fsa_network, fsa_port_comm))
+    s.sendto("Is any fourier smart server here?".encode("utf-8"), (fse_network, fse_port_comm))
     print("\n")
 
     while True:
