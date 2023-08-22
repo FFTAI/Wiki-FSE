@@ -687,8 +687,6 @@ def broadcast_func_with_filter(filter_type=None):
                 if json_obj["type"] == filter_type:
                     address_list.append(address[0])
                     found_server = True
-                else:
-                    found_server = False
 
         except socket.timeout:  # fail after 1 second of no activity
             if found_server:
