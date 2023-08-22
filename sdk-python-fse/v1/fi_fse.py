@@ -701,3 +701,28 @@ def broadcast_func_with_filter(filter_type=None):
             else:
                 logger.print_trace_error("Do not have any server! [Timeout] \n")
                 return False
+
+
+def ota(server_ip):
+    data = {
+        "method": "SET",
+        "reqTarget": "/ota",
+        "property": ""
+    }
+
+    json_str = json.dumps(data)
+
+    if fse_debug is True:
+        logger.print_trace("Send JSON Obj:", json_str)
+
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
+    try:
+        data, address = s.recvfrom(1024)
+
+        if fse_debug is True:
+            logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
+
+        json_obj = json.loads(data.decode('utf-8'))
+
+    except socket.timeout:  # fail after 1 second of no activity
+        print("Didn't receive anymore data! [Timeout]")
