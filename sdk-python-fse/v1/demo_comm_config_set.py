@@ -22,9 +22,9 @@ def main():
             dict = {
                 'name': 'FSE-' + str(i),
                 'DHCP_enable': False,
-                'SSID': 'FSE',
+                'SSID': 'fftai-12',
                 'password': 'fftai2015',
-                'static_IP': [192, 168, 137, i + 100],
+                'static_IP': [192, 168, 137, i + 200],
                 'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],
