@@ -22,9 +22,9 @@ def main():
             dict = {
                 'name': 'FSE-' + str(i),
                 'DHCP_enable': False,
-                'SSID': 'fftai-12',
+                'SSID': 'fftai-6',
                 'password': 'fftai2015',
-                'static_IP': [192, 168, 137, i + 200],
+                'static_IP': [192, 168, 137, i + 201],
                 'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],
@@ -32,14 +32,14 @@ def main():
             }
             fi_fse.set_comm_config(server_ip_list[i], dict)
 
-        print('\n')
         time.sleep(1)
 
         # get the communication configuration of all FAS
         for i in range(len(server_ip_list)):
             fi_fse.get_comm_config(server_ip_list[i])
 
-        print('\n')
+        for i in range(len(server_ip_list)):
+            fi_fse.reboot(server_ip_list[i])
 
 
 if __name__ == '__main__':
