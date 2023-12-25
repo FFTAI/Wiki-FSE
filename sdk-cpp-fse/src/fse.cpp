@@ -1,4 +1,11 @@
-#include "../include/fi_fse.h"
+#include "function_result.h"
+#include "logger.h"
+#include "fse.h"
+
+using namespace Predefine;
+using namespace Utils;
+using namespace Sensor;
+
 extern Logger *logger;
 
 void FSE::fi_init_network()
