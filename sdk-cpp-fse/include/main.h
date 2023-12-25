@@ -3,10 +3,9 @@
 
 
 #include <iostream>
-#include "fi_fse.h"
-#include "fi_logger.h"
-#include "../src/fi_fse.cpp"
-#include "../src/fi_logger.cpp"
+#include "fse.h"
+#include "logger.h"
+#include "os.h"
 
 #define ABSCODER  "AbsEncoder"
 #define ACTUATOR  "Actuator"

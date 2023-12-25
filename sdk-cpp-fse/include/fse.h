@@ -13,6 +13,11 @@
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
 
+#include "os.h"
+#include "logger.h"
+#include "function_result.h"
+
+
 #define SERVER_IP "192.168.137.255"
 #define SERVER_PORT_COMM 2334
 #define SERVER_PORT_CTRL 2333
@@ -95,7 +100,6 @@ namespace Sensor
         void demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg);
         void demo_broadcase();
         void demo_broadcase_filter(std::string filter_type);
-        void fi_fse_logger();
     };
 }
 

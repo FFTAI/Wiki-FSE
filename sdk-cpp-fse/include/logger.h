@@ -28,7 +28,11 @@ namespace Utils
         ~Logger();
 
     public:
-        static Logger *get_instance();
+        static Logger *get_instance()
+        {
+            static Logger instance;
+            return &instance;
+        }
 
     public:
         int print(const char *format /*format*/, ...);
