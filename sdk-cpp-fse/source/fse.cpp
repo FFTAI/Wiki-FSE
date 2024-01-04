@@ -11,8 +11,8 @@ FSE::~FSE() {}
 void FSE::fi_init_network()
 {
     struct timeval tv;
-    tv.tv_sec = 0;
-    tv.tv_usec = 10;
+    tv.tv_sec = 1;
+    tv.tv_usec = 0;
 
     // left
     this->fse_socket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -46,8 +46,8 @@ void FSE::fi_fse_comm(std::string ip, int port, char *msg, char *client_recv_msg
 
 void FSE::fi_decode(char *msg)
 {
-    Logger::get_instance()->print_trace("decode-> %s\n", msg);
-    usleep(100);
+    // Logger::get_instance()->print_trace_debug("decode-> %s\n", msg);
+    // usleep(100);
     if (this->msg_json.Parse(msg).HasParseError())
     {
         Logger::get_instance()->print_trace_error("decode failed\n");
@@ -101,7 +101,7 @@ void FSE::fi_send_msg(std::string ip, int port, char *msg)
     memset(this->server_ip, 0, sizeof(this->server_ip));
     this->server_ip_filter_num = 0;
     this->server_ip_num = 0;
-    Logger::get_instance()->print_trace("send json-> %s\n", this->send_buff);
+    Logger::get_instance()->print_trace_warning("send json-> %s\n", this->send_buff);
 
     switch (this->work_mode)
     {
@@ -168,7 +168,7 @@ void FSE::fi_recv_msg(char *client_recv_msg)
                 }
                 else
                 {
-                    Logger::get_instance()->print_trace_debug("broadcast recvfrom() successfully\n");
+                    Logger::get_instance()->print_trace("broadcast recvfrom() successfully\n");
                 }
                 break;
             }
@@ -204,63 +204,63 @@ void FSE::fi_recv_msg(char *client_recv_msg)
 
 void FSE::demo_comm_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_comm_config_get()\n");
+    Logger::get_instance()->print_trace("demo_comm_config_get()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_COMM, this->comm_config_get, client_recv_msg);
 }
 
 void FSE::demo_comm_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_comm_config_set()\n");
+    Logger::get_instance()->print_trace("demo_comm_config_set()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_COMM, define_msg_sendto, client_recv_msg);
 }
 
 void FSE::demo_ctrl_config_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ctrl_config_get()\n");
+    Logger::get_instance()->print_trace("demo_ctrl_config_get()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->ctrl_config_get, client_recv_msg);
 }
 
 void FSE::demo_ctrl_config_save(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ctrl_config_save()\n");
+    Logger::get_instance()->print_trace("demo_ctrl_config_save()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->ctrl_config_save, client_recv_msg);
 }
 
 void FSE::demo_ctrl_config_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ctrl_config_set()\n");
+    Logger::get_instance()->print_trace("demo_ctrl_config_set()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, define_msg_sendto, client_recv_msg);
 }
 
 void FSE::demo_get_measured(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_get_measured()\n");
+    Logger::get_instance()->print_trace("demo_get_measured()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->get_measured, client_recv_msg);
 }
 
 void FSE::demo_home_offset_get(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_home_offset_get()\n");
+    Logger::get_instance()->print_trace("demo_home_offset_get()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->get_home_offset, client_recv_msg);
 }
 
 void FSE::demo_home_offset_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_home_offset_set()\n");
+    Logger::get_instance()->print_trace("demo_home_offset_set()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, define_msg_sendto, client_recv_msg);
 }
 
 void FSE::demo_home_position_set(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_home_position_set()\n");
+    Logger::get_instance()->print_trace("demo_home_position_set()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->set_home_position, client_recv_msg);
     // this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->comm_config_get, client_recv_msg);
@@ -276,53 +276,53 @@ void FSE::demo_lookup()
 
 void FSE::demo_ota_cloud(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ota\n");
+    Logger::get_instance()->print_trace("demo_ota\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_COMM, this->ota_cloud, client_recv_msg);
 }
 
 void FSE::demo_ota_test(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ota_test\n");
+    Logger::get_instance()->print_trace("demo_ota_test\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_COMM, this->ota_test, client_recv_msg);
 }
 
 void FSE::demo_ota(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_ota\n");
+    Logger::get_instance()->print_trace("demo_ota\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_COMM, this->ota, client_recv_msg);
 }
 
 void FSE::demo_reboot_fse(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_reboot_fse()\n");
+    Logger::get_instance()->print_trace("demo_reboot_fse()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->reboot_fse, client_recv_msg);
 }
 
 void FSE::demo_reboot(std::string sigle_ip, char *define_msg_sendto, char *client_recv_msg)
 {
-    Logger::get_instance()->print_trace_debug("demo_reboot()\n");
+    Logger::get_instance()->print_trace("demo_reboot()\n");
     this->work_mode = WorkMode::SIGLE_MODE;
     this->fi_fse_comm(sigle_ip, SERVER_PORT_CTRL, this->reboot_all, client_recv_msg);
 }
 
 void FSE::demo_broadcase()
 {
-    Logger::get_instance()->print_trace_debug("broadcase all\n");
+    Logger::get_instance()->print_trace("broadcase all\n");
     this->work_mode = WorkMode::BROADCAST_MODE;
     this->fi_fse_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL);
-    Logger::get_instance()->print_trace_debug("broadcase finished\n");
+    Logger::get_instance()->print_trace("broadcase finished\n");
 }
 
 void FSE::demo_broadcase_filter(std::string filter_type)
 {
-    Logger::get_instance()->print_trace_debug("broadcase all with filter\n");
+    Logger::get_instance()->print_trace("broadcase all with filter\n");
     this->work_mode = WorkMode::BROADCASE_FILTER_MODE;
     this->server_filter_type = filter_type;
     this->fi_fse_comm(SERVER_IP, SERVER_PORT_COMM, this->broadcast_msg, NULL);
-    Logger::get_instance()->print_trace_debug("filter broadcase finished\n");
+    Logger::get_instance()->print_trace("filter broadcase finished\n");
 }
 
