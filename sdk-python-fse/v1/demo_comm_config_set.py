@@ -28,7 +28,8 @@ def main():
                 'gateway': [192, 168, 137, 1],
                 'subnet_mask': [255, 255, 255, 0],
                 'dns_1': [114, 114, 114, 114],
-                'dns_2': [8, 8, 8, 8]
+                'dns_2': [8, 8, 8, 8],
+                'connect_mode': fi_fse.FSE_CONNECT_MODE_WIFI,
             }
             fi_fse.set_comm_config(server_ip_list[i], dict)
 

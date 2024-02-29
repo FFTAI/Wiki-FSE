@@ -39,6 +39,9 @@ fse_port_comm = default_fse_port_comm
 fse_port_pt = default_fse_port_pt
 fse_network = default_fse_network
 
+FSE_CONNECT_MODE_ETH = 2
+FSE_CONNECT_MODE_WIFI = 1
+
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.settimeout(fse_timeout)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -523,6 +526,7 @@ def set_comm_config(server_ip, dict):
         "subnet_mask": dict.get("subnet_mask"),
         "dns_1": dict.get("dns_1"),
         "dns_2": dict.get("dns_2"),
+        "connect_mode": dict.get("connect_mode"),
     }
 
     json_str = json.dumps(data)
