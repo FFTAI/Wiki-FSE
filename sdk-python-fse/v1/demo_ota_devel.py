@@ -1,16 +1,16 @@
-import fi_fsa
+import fi_fse
 import time
 
 server_ip_list = []
 
 
 def main():
-    server_ip_list = fi_fsa.broadcast_func_with_filter(filter_type="AbsEncoder")
+    server_ip_list = fi_fse.broadcast_func_with_filter(filter_type="AbsEncoder")
 
     if server_ip_list:
 
         for i in range(len(server_ip_list)):
-            fi_fsa.ota_devel(server_ip_list[i])
+            fi_fse.ota_devel(server_ip_list[i])
 
         print('\n')
         time.sleep(1)

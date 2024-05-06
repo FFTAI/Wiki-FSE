@@ -789,14 +789,14 @@ def ota_devel(server_ip):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fse_debug is True:
             logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
@@ -814,14 +814,14 @@ def ota_custom(server_ip, version_str):
 
     json_str = json.dumps(data)
 
-    if fsa_debug is True:
+    if fse_debug is True:
         logger.print_trace("Send JSON Obj:", json_str)
 
-    s.sendto(str.encode(json_str), (server_ip, fsa_port_comm))
+    s.sendto(str.encode(json_str), (server_ip, fse_port_comm))
     try:
         data, address = s.recvfrom(1024)
 
-        if fsa_debug is True:
+        if fse_debug is True:
             logger.print_trace("Received from {}:{}".format(address, data.decode("utf-8")))
 
         json_obj = json.loads(data.decode('utf-8'))
